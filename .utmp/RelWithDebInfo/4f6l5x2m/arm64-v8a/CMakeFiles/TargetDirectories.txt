@@ -1,0 +1,8 @@
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/CMakeFiles/rebuild_cache.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/GameActivity/CMakeFiles/game.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/GameActivity/CMakeFiles/edit_cache.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/GameActivity/CMakeFiles/rebuild_cache.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/FramePacing/CMakeFiles/swappywrapper.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/FramePacing/CMakeFiles/edit_cache.dir
+/Users/ed/Documents/ucsd/cse165/cse165-sp24-proj1/.utmp/RelWithDebInfo/4f6l5x2m/arm64-v8a/FramePacing/CMakeFiles/rebuild_cache.dir
