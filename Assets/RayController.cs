@@ -14,6 +14,7 @@ public class RayController
     private float length = 10.0f;
     private bool deviceOn = false;
     private RayInteractable holded = null;
+    private RayInteractable hovered = null;
 
     public RayController(GameObject obj, XRNode xrNode)
     {
@@ -39,17 +40,18 @@ public class RayController
             {
                 var hitObj = FindRayInteractable();
 
-                if (hitObj != null)
+                if (holded != null)
+                {
+                    holded.OnHolding(xrNode);
+                    guide.DrawLine(start, start, selected);
+                }
+                else if (hitObj != null)
                 {
                     holded = hitObj;
                     hitObj.OnHold(xrNode);
                     guide.DrawLine(start, end, selected);
                 }
-                else if (holded != null)
-                {
-                    holded.OnHolding(xrNode);
-                    guide.DrawLine(start, start, selected);
-                } else
+                else
                 {
                     guide.DrawLine(start, end, idle);
                 }
@@ -71,10 +73,22 @@ public class RayController
                     if (hitObj != null)
                     {
                         guide.DrawLine(start, end, inUse);
+
+                        if (hovered != null && hovered != hitObj)
+                        {
+                            hovered.OnBlur();
+                        }
+                        hovered = hitObj;
+                        hovered.OnHover();
                     }
                     else
                     {
                         guide.DrawLine(start, end, idle);
+                        if (hovered != null)
+                        {
+                            hovered.OnBlur();
+                            hovered = null;
+                        }
                     }
                 }
             }
