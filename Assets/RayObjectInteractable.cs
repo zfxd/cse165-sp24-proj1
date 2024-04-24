@@ -10,8 +10,12 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
     Renderer r;
     Color defaultColor;
     Color highlightColor = new Color(0.5f, 0.5f, 1.0f, 1.0f);
+    Color resizingColor = new Color(0.5f, 1.0f, 0.5f, 0.5f);
 
     private Quaternion initialRotationOffset;
+
+    private float initDistance;
+    private bool scalerEnabled;
 
     void Start()
     {
@@ -49,6 +53,36 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         // holding location
         gameObject.transform.position = obj.transform.position + obj.transform.forward * 0.2f;
         gameObject.transform.rotation = obj.transform.rotation * initialRotationOffset;
+
+        if (InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
+            .TryGetFeatureValue(CommonUsages.gripButton, out bool leftGripped))
+        {
+            if (InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
+                .TryGetFeatureValue(CommonUsages.gripButton, out bool rightGripped))
+            {
+                if (leftGripped && rightGripped)
+                {
+                    float dist = Vector3.Distance(leftHand.transform.position, rightHand.transform.position);
+
+                    if (! scalerEnabled)
+                    {
+                        scalerEnabled = true;
+                        initDistance = dist;
+
+                        r.material.SetColor("_Color", resizingColor);
+                    }
+
+                    float deltaDist = dist - initDistance;
+                    gameObject.transform.localScale *= (1.0f + deltaDist);
+
+                    initDistance = dist;
+                } else
+                {
+                    scalerEnabled = false;
+                    r.material.SetColor("_Color", defaultColor);
+                }
+            }
+        }
     }
 
     public void OnRelease()
