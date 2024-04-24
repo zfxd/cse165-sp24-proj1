@@ -60,11 +60,11 @@ public class RayController
             {
                 if (holded != null)
                 {
+                    guide.DrawLine(start, end, inUse);
+
                     var _holded = holded;
                     holded = null;
                     _holded.OnRelease();
-
-                    guide.DrawLine(start, end, inUse);
                 }
                 else
                 {

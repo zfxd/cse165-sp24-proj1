@@ -5,6 +5,9 @@ using UnityEngine.XR;
 public class RayObjectInteractable : MonoBehaviour, RayInteractable
 {
     public bool isOnHold = false;
+    public bool scalable = true;
+    public float maxHoldingDistance = 0.2f;
+
     GameObject leftHand;
     GameObject rightHand;
     Renderer r;
@@ -12,10 +15,9 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
     Color highlightColor = new Color(0.5f, 0.5f, 1.0f, 1.0f);
     Color resizingColor = new Color(0.5f, 1.0f, 0.5f, 0.5f);
 
-    private Quaternion initialRotationOffset;
-
-    private float initDistance;
-    private bool scalerEnabled;
+    protected Quaternion initialRotationOffset;
+    protected float initDistance;
+    protected bool scalerEnabled;
 
     void Start()
     {
@@ -24,9 +26,12 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         r = GetComponent<Renderer>();
 
         defaultColor = r.material.color;
+        StartAfter();
     }
 
-    public void OnHold(XRNode node)
+    public virtual void StartAfter() { }
+
+    public virtual void OnHold(XRNode node)
     {
         if (!isOnHold)
         {
@@ -46,15 +51,15 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         }
     }
 
-    public void OnHolding(XRNode node)
+    public virtual void OnHolding(XRNode node)
     {
         var obj = node == XRNode.LeftHand ? leftHand : rightHand;
 
         // holding location
-        gameObject.transform.position = obj.transform.position + obj.transform.forward * 0.2f;
+        gameObject.transform.position = obj.transform.position + obj.transform.forward * maxHoldingDistance;
         gameObject.transform.rotation = obj.transform.rotation * initialRotationOffset;
 
-        if (InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
+        if (scalable && InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
             .TryGetFeatureValue(CommonUsages.gripButton, out bool leftGripped))
         {
             if (InputDevices.GetDeviceAtXRNode(XRNode.RightHand)
@@ -85,7 +90,7 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         }
     }
 
-    public void OnRelease()
+    public virtual void OnRelease()
     {
         if (isOnHold)
         {
