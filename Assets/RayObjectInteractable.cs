@@ -42,7 +42,7 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
             if (obj != null)
             {
                 gameObject.GetComponent<Rigidbody>().isKinematic = true;
-                gameObject.GetComponent<Collider>().enabled = false;
+                //gameObject.GetComponent<Collider>().enabled = false;
 
                 initialRotationOffset = Quaternion.Inverse(obj.transform.rotation) * transform.rotation;
                 removeHighlight();
@@ -96,7 +96,7 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         {
             isOnHold = false;
             gameObject.GetComponent<Rigidbody>().isKinematic = false;
-            gameObject.GetComponent<Collider>().enabled = true;
+            //gameObject.GetComponent<Collider>().enabled = true;
         }
     }
 
