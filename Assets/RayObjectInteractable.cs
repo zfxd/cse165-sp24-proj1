@@ -7,6 +7,7 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
     public bool isOnHold = false;
     public bool scalable = true;
     public float maxHoldingDistance = 0.2f;
+    public float holdingDistance;
 
     protected GameObject leftHand;
     protected GameObject rightHand;
@@ -36,6 +37,7 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         if (!isOnHold)
         {
             isOnHold = true;
+            holdingDistance = maxHoldingDistance; // use it as init value
 
             var obj = node == XRNode.LeftHand ? leftHand : rightHand;
 
@@ -46,6 +48,13 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
 
                 initialRotationOffset = Quaternion.Inverse(obj.transform.rotation) * transform.rotation;
                 removeHighlight();
+                if (InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.gripButton, out bool gripped))
+                {
+                    if (gripped)
+                    {
+                        holdingDistance = Vector3.Distance(gameObject.transform.position, obj.transform.position);
+                    }
+                }
                 OnHolding(node);
             }
         }
@@ -56,7 +65,7 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
         var obj = node == XRNode.LeftHand ? leftHand : rightHand;
 
         // holding location
-        gameObject.transform.position = obj.transform.position + obj.transform.forward * maxHoldingDistance;
+        gameObject.transform.position = obj.transform.position + obj.transform.forward * holdingDistance;
         gameObject.transform.rotation = obj.transform.rotation * initialRotationOffset;
 
         if (scalable && InputDevices.GetDeviceAtXRNode(XRNode.LeftHand)
