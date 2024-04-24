@@ -13,6 +13,7 @@ public class RayController
 
     private float length = 10.0f;
     private bool deviceOn = false;
+    private RayInteractable holded = null;
 
     public RayController(GameObject obj, XRNode xrNode)
     {
@@ -25,10 +26,8 @@ public class RayController
         Vector3 start = obj.transform.position;
         Vector3 end = obj.transform.position + obj.transform.forward * length;
 
-        bool triggered;
-
         if (InputDevices.GetDeviceAtXRNode(xrNode)
-                .TryGetFeatureValue(CommonUsages.triggerButton, out triggered))
+                .TryGetFeatureValue(CommonUsages.triggerButton, out bool triggered))
         {
             if (!deviceOn)
             {
@@ -36,24 +35,47 @@ public class RayController
                 deviceOn = true;
             }
 
-            var hitObj = FindRayInteractable();
-
             if (triggered)
             {
-                guide.DrawLine(start, end, selected);
+                var hitObj = FindRayInteractable();
 
-                if (hitObj)
+                if (hitObj != null)
                 {
-                    hitObj.OnHold();
+                    holded = hitObj;
+                    hitObj.OnHold(xrNode);
+                    guide.DrawLine(start, end, selected);
+                }
+                else if (holded != null)
+                {
+                    holded.OnHolding(xrNode);
+                    guide.DrawLine(start, start, selected);
+                } else
+                {
+                    guide.DrawLine(start, end, idle);
                 }
             }
             else
             {
-                guide.DrawLine(start, end, hitObj == null ? idle : inUse);
-
-                if (hitObj)
+                if (holded != null)
                 {
-                    hitObj.OnRelease();
+                    var _holded = holded;
+                    holded = null;
+                    _holded.OnRelease();
+
+                    guide.DrawLine(start, end, inUse);
+                }
+                else
+                {
+                    var hitObj = FindRayInteractable();
+
+                    if (hitObj != null)
+                    {
+                        guide.DrawLine(start, end, inUse);
+                    }
+                    else
+                    {
+                        guide.DrawLine(start, end, idle);
+                    }
                 }
             }
         }

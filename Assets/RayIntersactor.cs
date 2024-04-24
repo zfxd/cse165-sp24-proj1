@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -21,13 +19,13 @@ public class RayIntersactor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        leftCtrl.Update();
         rightCtrl.Update();
+        leftCtrl.Update();
     }
 
     private void OnDestroy()
     {
-        leftCtrl.Destory();
         rightCtrl.Destory();
+        leftCtrl.Destory();
     }
 }
