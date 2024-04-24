@@ -3,10 +3,10 @@ using UnityEngine.XR;
 
 public class RayButtonInteractable : MonoBehaviour, RayInteractable
 {
-    Renderer r;
-    Color defaultColor;
-    Color hoverColor = new Color(0.9f, 0.9f, 1.0f, 1.0f);
-    Color pressedColor = new Color(0.4f, 1.0f, 0.4f, 1.0f);
+    protected Renderer r;
+    protected Color defaultColor;
+    protected Color hoverColor = new Color(0.9f, 0.9f, 1.0f, 1.0f);
+    protected Color pressedColor = new Color(0.4f, 1.0f, 0.4f, 1.0f);
 
     void Start()
     {
@@ -37,7 +37,7 @@ public class RayButtonInteractable : MonoBehaviour, RayInteractable
         r.material.SetColor("_Color", hoverColor);
     }
 
-    public void OnBlur()
+    virtual public void OnBlur()
     {
         r.material.SetColor("_Color", defaultColor);
     }

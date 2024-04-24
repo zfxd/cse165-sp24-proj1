@@ -8,12 +8,12 @@ public class RayObjectInteractable : MonoBehaviour, RayInteractable
     public bool scalable = true;
     public float maxHoldingDistance = 0.2f;
 
-    GameObject leftHand;
-    GameObject rightHand;
-    Renderer r;
-    Color defaultColor;
-    Color highlightColor = new Color(0.5f, 0.5f, 1.0f, 1.0f);
-    Color resizingColor = new Color(0.5f, 1.0f, 0.5f, 0.5f);
+    protected GameObject leftHand;
+    protected GameObject rightHand;
+    protected Renderer r;
+    protected Color defaultColor;
+    protected Color highlightColor = new Color(0.5f, 0.5f, 1.0f, 1.0f);
+    protected Color resizingColor = new Color(0.5f, 1.0f, 0.5f, 0.5f);
 
     protected Quaternion initialRotationOffset;
     protected float initDistance;

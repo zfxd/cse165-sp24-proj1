@@ -28,18 +28,11 @@ public class RaySpawnTableInteractable : RayObjectInteractable
         Vector3 newPosition = gameObject.transform.position - caretPositionOffset;
         newPosition.y = tableY;
         table.transform.position = newPosition;
-        table.transform.rotation = gameObject.transform.rotation;
 
         Vector3 newCanvasPosition = gameObject.transform.position - canvasPositionOffset;
         newCanvasPosition.y = canvasY;
         canvas.transform.position = newCanvasPosition;
-        canvas.transform.rotation = gameObject.transform.rotation;
 
         gameObject.transform.position = new Vector3(gameObject.transform.position.x, y, gameObject.transform.position.z);
-    }
-
-    public override void OnRelease()
-    {
-        base.OnRelease();
     }
 }
