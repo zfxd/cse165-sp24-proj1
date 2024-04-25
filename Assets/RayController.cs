@@ -53,6 +53,9 @@ public class RayController
         {
             obj.SetActive(false);
             deviceOn = false;
+            // reset the states
+            held = null;
+            hovered = null;
 
             guide.DrawLine(start, start, idle);
         }
@@ -189,7 +192,6 @@ public class RayController
                 return obj;
             }
         }
-
         return null;
     }
 

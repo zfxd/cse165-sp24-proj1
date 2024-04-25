@@ -7,14 +7,25 @@ public class RayGuideline
 
     public RayGuideline(float lineSize = 0.005f)
     {
+        initLineRenderer();
+        this.lineSize = lineSize;
+    }
+
+    void initLineRenderer()
+    {
         GameObject lineObj = new GameObject("RayGuideline");
+
         lineRenderer = lineObj.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Hidden/Internal-Colored"));
-        this.lineSize = lineSize;
     }
 
     public void DrawLine(Vector3 start, Vector3 end, Color color)
     {
+        if (lineRenderer == null)
+        {
+            initLineRenderer();
+        }
+
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
 
@@ -31,6 +42,7 @@ public class RayGuideline
         if (lineRenderer != null)
         {
             Object.Destroy(lineRenderer.gameObject);
+            lineRenderer = null;
         }
     }
 }
