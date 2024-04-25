@@ -127,6 +127,8 @@ public class RayController
         else if (condition == TriggerButtonCondition.Released)
         {
             // check any remaining cases
+            held = null;
+            hovered = null;
         }
     }
 
