@@ -16,6 +16,7 @@ public class RayController
     protected GameObject obj;
     protected XRNode xrNode;
     protected RayGuideline guide = new RayGuideline();
+    protected GameObject indicator;
 
     protected Color idle = new Color(Color.gray.r, Color.gray.g, Color.gray.b, 0.5f);
     protected Color invalid = new Color(Color.red.r, Color.red.g, Color.red.b, 0.5f);
@@ -30,10 +31,11 @@ public class RayController
 
     private TriggerButtonCondition condition = TriggerButtonCondition.NoExist;
 
-    public RayController(GameObject obj, XRNode xrNode)
+    public RayController(GameObject obj, XRNode xrNode, GameObject indicator)
     {
         this.obj = obj;
         this.xrNode = xrNode;
+        this.indicator = indicator;
     }
 
     public void Update()
@@ -191,6 +193,11 @@ public class RayController
         {
             if(hit.collider.gameObject.TryGetComponent(out RayInteractable obj))
             {
+                if (obj is RayGroundInteractable)
+                {
+                    // Move indicator here
+                    indicator.transform.position = hit.point;
+                }
                 return obj;
             }
         }

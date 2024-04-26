@@ -9,6 +9,7 @@ public class RayGroundInteractable : MonoBehaviour, RayInteractable
 
     protected GameObject leftHand;
     protected GameObject rightHand;
+    
 
     // Start is called before the first frame update
     void Start()
